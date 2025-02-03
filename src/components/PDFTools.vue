@@ -296,7 +296,8 @@ onUnmounted(() => {
         <div class="icons">
           <img class="icon clickable" :src="githubIcon"
             @click="openNewWindow('https://github.com/CatScarf/LyciumTools')" />
-          <img class="icon clickable" :src="bilibiliIcon" />
+          <img class="icon clickable" :src="bilibiliIcon"
+            @click="openNewWindow('https://www.bilibili.com/video/BV12gPoeTEXW/')" />
         </div>
         <div class="clickable common-button" @click="convert"
           :style="{ background: `linear-gradient(to right, #4caf50 ${percent}%, white ${percent}%)` }">
@@ -323,17 +324,6 @@ onUnmounted(() => {
 .container-mobile {
   flex-direction: column;
 }
-
-/* .images {
-  position: relative;
-  --image-margin: 0.1rem;
-  width: calc(100% - var(--image-margin));
-  height: max-content;
-  display: flex;
-  flex-wrap: wrap;
-  overflow-y: auto;
-  margin: var(--image-margin);
-} */
 
 .images-container {
   display: flex;
