@@ -66,9 +66,9 @@ const sortImagesByName = () => {
     const parts1 = split(n1)
     const parts2 = split(n2)
 
-    const maxLength = Math.min(parts1.length, parts2.length)
+    const minLength = Math.min(parts1.length, parts2.length)
 
-    for (let i = 0; i < maxLength; i++) {
+    for (let i = 0; i < minLength; i++) {
       const p1 = parts1[i]
       const p2 = parts2[i]
 
