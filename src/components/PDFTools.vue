@@ -6,6 +6,7 @@ import { ref } from 'vue'
 import { readableElapse } from './ts/utils'
 import type { ConvertArgs } from './ts/convertworker'
 import { createPDF } from "./ts/pdf"
+import Worker from './ts/convertworker.ts?worker'
 
 type Image = {
   file: File
@@ -171,8 +172,7 @@ const convert = async () => {
   }
   const files = images.value.map((data) => data.file)
   const threads = navigator.hardwareConcurrency || 4
-  const url = new URL('./ts/convertworker.ts', import.meta.url)
-  const workers = Array(threads).fill(0).map(() => new Worker(url, { type: 'module' }))
+  const workers = Array(threads).fill(0).map(() => new Worker())
   const pool = new WorkerPool<ConvertArgs, ArrayBuffer>(workers)
 
   clearImages()
