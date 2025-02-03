@@ -167,7 +167,7 @@ const convert = async () => {
   const toConvertArgs = (file: File): ConvertArgs => {
     return {
       file: file,
-      quality: 1.0,
+      quality: 0.9,
     }
   }
   const files = images.value.map((data) => data.file)
