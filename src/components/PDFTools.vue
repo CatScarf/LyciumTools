@@ -155,6 +155,12 @@ const download = (file: File) => {
 }
 
 
+// 打开新窗口
+const openNewWindow = (url: string) => {
+  window.open(url, '_blank');
+};
+
+
 // 开始转换
 const convert = async () => {
   const toConvertArgs = (file: File): ConvertArgs => {
@@ -288,7 +294,8 @@ onUnmounted(() => {
       </div>
       <div class="icons-and-convert-button" :class="{ 'icons-and-convert-button-mobile': isMobile }">
         <div class="icons">
-          <img class="icon clickable" :src="githubIcon" />
+          <img class="icon clickable" :src="githubIcon"
+            @click="openNewWindow('https://github.com/CatScarf/LyciumTools')" />
           <img class="icon clickable" :src="bilibiliIcon" />
         </div>
         <div class="clickable common-button" @click="convert"
