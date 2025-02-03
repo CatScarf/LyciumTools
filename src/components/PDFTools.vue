@@ -58,44 +58,44 @@ const clearImages = () => {
 // 按文件名排序图片
 const sortImagesByName = () => {
   const split = (str: string): string[] => {
-    const matches = str.match(/(\D+|\d+)/g) || [];
-    return matches.filter(Boolean);
-  };
+    const matches = str.match(/(\D+|\d+)/g) || []
+    return matches.filter(Boolean)
+  }
 
   const lt = (n1: string, n2: string): boolean => {
-    const parts1 = split(n1);
-    const parts2 = split(n2);
+    const parts1 = split(n1)
+    const parts2 = split(n2)
 
-    const maxLength = Math.max(parts1.length, parts2.length);
+    const maxLength = Math.max(parts1.length, parts2.length)
 
     for (let i = 0; i < maxLength; i++) {
-      const p1 = parts1[i];
-      const p2 = parts2[i];
+      const p1 = parts1[i]
+      const p2 = parts2[i]
 
-      if (typeof p1 === 'undefined') return true;
-      if (typeof p2 === 'undefined') return false;
+      if (typeof p1 === 'undefined') return true
+      if (typeof p2 === 'undefined') return false
 
-      const isNum1 = /^\d+$/.test(p1);
-      const isNum2 = /^\d+$/.test(p2);
+      const isNum1 = /^\d+$/.test(p1)
+      const isNum2 = /^\d+$/.test(p2)
 
       if (isNum1 && isNum2) {
-        const num1 = parseInt(p1, 10);
-        const num2 = parseInt(p2, 10);
-        if (num1 !== num2) return num1 < num2;
-        continue;
+        const num1 = parseInt(p1, 10)
+        const num2 = parseInt(p2, 10)
+        if (num1 !== num2) return num1 < num2
+        continue
       }
 
       if (isNum1 !== isNum2) {
-        return p1 < p2;
+        return p1 < p2
       }
 
       if (p1 !== p2) {
-        return p1 < p2;
+        return p1 < p2
       }
     }
 
-    return n1 < n2;
-  };
+    return n1 < n2
+  }
 
   images.value.sort((a, b) => {
     if (a.file.name == b.file.name) {
@@ -138,7 +138,7 @@ const handleFileInput = (event: Event) => {
     }
     name.value = newName
 
-    const newImages = Array.from(input.files).filter(isImage).map(createImage);
+    const newImages = Array.from(input.files).filter(isImage).map(createImage)
     input.value = ''
     images.value = images.value.concat(newImages)
     sortImagesByName()
@@ -158,8 +158,8 @@ const download = (file: File) => {
 
 // 打开新窗口
 const openNewWindow = (url: string) => {
-  window.open(url, '_blank');
-};
+  window.open(url, '_blank')
+}
 
 
 // 开始转换
@@ -224,7 +224,7 @@ const onImagesResize = () => {
 const onWindowResize = () => {
   const width = window.innerWidth
   const height = window.innerHeight
-  isMobile.value = (width < 500 && height / width >= 16 / 9) || height / width > 2
+  isMobile.value = (width < 500 && height / width >= 1) || height / width > 2
 }
 
 onMounted(async () => {
@@ -285,7 +285,7 @@ onUnmounted(() => {
           添加文件
           <input ref="fileInput" type="file" multiple class="hidden-input" @change="handleFileInput" />
         </div>
-        <div class="clickable common-button" @click="addDir">
+        <div class="clickable common-button" @click="addDir" v-if="!isMobile">
           添加文件夹
           <input ref="dirInput" type="file" webkitdirectory class="hidden-input" @change="handleFileInput" />
         </div>
