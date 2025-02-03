@@ -170,10 +170,12 @@ const convert = async () => {
       quality: 0.9,
     }
   }
+
   const files = images.value.map((data) => data.file)
   const threads = navigator.hardwareConcurrency || 4
   const workers = Array(threads).fill(0).map(() => new Worker())
   const pool = new WorkerPool<ConvertArgs, ArrayBuffer>(workers)
+  console.log(`Start convert ${files.length} images with ${threads} threads`)
 
   clearImages()
 
