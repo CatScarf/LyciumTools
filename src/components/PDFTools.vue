@@ -249,12 +249,10 @@ onUnmounted(() => {
 
 <template>
   <div class="container" :class="{ 'container-mobile': isMobile }">
-    <div class="images-container" :class="{ 'images-container-mobile': isMobile }">
-      <div class="images" ref="imagesDiv">
-        <div class="image-container" v-for="(image, i) in images" :key="i" :style="{ width: `${100 / zoomValue}%` }">
-          <img class="image" :src="image.url" alt="Preview" />
-          <div class=" image-title">{{ image.file.name }}
-          </div>
+    <div class="images-container" ref="imagesDiv" :class="{ 'images-container-mobile': isMobile }">
+      <div class="image-container" v-for="(image, i) in images" :key="i" :style="{ width: `${100 / zoomValue}%` }">
+        <img class="image" :src="image.url" alt="Preview" />
+        <div class=" image-title">{{ image.file.name }}
         </div>
       </div>
       <div v-if="images.length === 0" class="start-zone column-flex">
@@ -324,10 +322,24 @@ onUnmounted(() => {
   flex-direction: column;
 }
 
+/* .images {
+  position: relative;
+  --image-margin: 0.1rem;
+  width: calc(100% - var(--image-margin));
+  height: max-content;
+  display: flex;
+  flex-wrap: wrap;
+  overflow-y: auto;
+  margin: var(--image-margin);
+} */
+
 .images-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   width: calc(100% - var(--control-panel-width));
+  flex-wrap: wrap;
+  overflow-y: auto;
+  height: 100%;
 }
 
 .images-container-mobile {
@@ -510,16 +522,6 @@ onUnmounted(() => {
   color: gray;
 }
 
-.images {
-  position: relative;
-  --image-margin: 0.1rem;
-  width: calc(100% - var(--image-margin));
-  height: fit-content;
-  display: flex;
-  flex-wrap: wrap;
-  overflow-y: auto;
-  margin: var(--image-margin);
-}
 
 .image-container {
   height: auto;
