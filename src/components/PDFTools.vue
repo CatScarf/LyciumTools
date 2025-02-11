@@ -181,7 +181,25 @@ const convert = async () => {
 
   let start = Date.now()
   let num = 0
-  const buffers: ArrayBuffer[] = []
+  const buffers: ArrayBuffer[] = Array(files.length)
+
+  pool.map(files.map(toConvertArgs)).forEach((promise, i) => {
+    promise.then((buffer) => {
+      num += 1
+      percent.value = num / files.length * 100
+      buffers[i] = buffer
+      if (num === files.length) {
+        const elapse1 = readableElapse(Date.now() - start)
+        start = Date.now()
+        createPDF(buffers, name.value + ".pdf").then((pdf) => {
+          const elapse2 = readableElapse(Date.now() - start)
+          console.log(`Convert success ${elapse1}, ${elapse2}`, pdf)
+          pdfs.value.push(pdf)
+          download(pdf)
+        })
+      }
+    })
+  })
 
   for (const promise of pool.map(files.map(toConvertArgs))) {
     promise.then((buffer) => {
