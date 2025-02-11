@@ -185,10 +185,10 @@ const convert = async () => {
 
   pool.map(files.map(toConvertArgs)).forEach((promise, i) => {
     promise.then((buffer) => {
-      num += 1
+      num = num + 1
       percent.value = num / files.length * 100
       buffers[i] = buffer
-      if (num === files.length) {
+      if (num >= buffers.length) {
         const elapse1 = readableElapse(Date.now() - start)
         start = Date.now()
         createPDF(buffers, name.value + ".pdf").then((pdf) => {
@@ -200,24 +200,6 @@ const convert = async () => {
       }
     })
   })
-
-  for (const promise of pool.map(files.map(toConvertArgs))) {
-    promise.then((buffer) => {
-      num += 1
-      percent.value = num / files.length * 100
-      buffers.push(buffer)
-      if (num === files.length) {
-        const elapse1 = readableElapse(Date.now() - start)
-        start = Date.now()
-        createPDF(buffers, name.value + ".pdf").then((pdf) => {
-          const elapse2 = readableElapse(Date.now() - start)
-          console.log(`Convert success ${elapse1}, ${elapse2}`, pdf)
-          pdfs.value.push(pdf)
-          download(pdf)
-        })
-      }
-    })
-  }
 }
 
 // 处理缩放滑块移动事件
